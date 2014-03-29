@@ -1,29 +1,25 @@
 @ = require(['mho:app','mho:std']);
 
+var candidates;
+
 @withAPI('./sort.api'){
  |api|
- console.log(api.getTopics());
+  candidates = api.getTopics();
 }
+console.log(candidates);
 
-var candidates = [
-  'apple',
-  'pear',
-  'melon',
-  'grape',
-  'pineapple',
-  'meatbal',
-  'banana',
-  'kiwi',
-];
+
+var pickRand = a->a[Math.ceil(Math.random()*(a.length-1))];
 
 function isBetter(a, b){
+  var wrpImg = t->@Img({src:pickRand(t.images)}) .. @Style('{width:200px}');
   @mainContent .. @appendContent(
     `
       <table>
         <tr><td colspan="2"><h1>pick one</h1></td></tr>
         <tr>
-          <td class="a">${a}</td>
-          <td class="b">${b}</td>
+          <td class="a">${wrpImg(a)}</td>
+          <td class="b">${wrpImg(b)}</td>
         </tr>
       </table>
     `
@@ -58,5 +54,5 @@ while (candidates.length){
 @mainContent .. @appendContent([
   `<h1>Tadaaa</h1>`,
   @Table(
-  order .. @map( i->@Tr(@Td(i)) ) .. @toArray)
+  order .. @map( i->@Tr(@Td(i.topic)) ) .. @toArray)
 ]);

@@ -1,0 +1,20 @@
+@ = require(['mho:app', 'sjs:nodejs/fs', 'sjs:sequence', 'sjs:object']);
+
+
+var 
+  topicRoot = './topics';
+
+exports.getTopics = function(){
+  return @readdir(topicRoot)
+    .. @filter(d->@isDirectory(topicRoot+'/'+d))
+    .. @map( topic -> {topic:topic, images:@readdir(topicRoot+"/"+topic)
+        .. @filter(f->@isFile(topicRoot+"/"+topic+'/'+f)) 
+        .. @map( f->('/topics/'+topic+'/'+f) )
+        .. @toArray}
+    )
+   .. @toArray
+    ;
+}
+
+console.log(exports.getTopics());
+
