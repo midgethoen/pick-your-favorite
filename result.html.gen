@@ -29,15 +29,18 @@ exports.content = function(param){
     }\"/>";
 
     facebookButton = 
-      "<a href=\"https://www.facebook.com/sharer/sharer.php?u\" 
+      "<a href=\"https://www.facebook.com/sharer/sharer.php?u=#{this.url.source .. @url.encode}\" 
           target=\"_blank\"
-          type=\"button\" 
           class=\"btn btn-primary col-md-2\">
-            Like on Facebook
+           Share
        </a>";
 
-    console.log(stats);
-
+    twitterButton = 
+      "<a href=\"https://twitter.com/share?url=#{this.url.source .. @url.encode}\" 
+          target=\"_blank\"
+          class=\"btn btn-primary col-md-2\">
+           Tweet 
+       </a>";
 
     return "
     <!DOCTYPE html>
@@ -98,7 +101,7 @@ exports.content = function(param){
                   #{facebookButton}
                 <div class=\"col-md-2\">
                 </div><!-- end md-3 -->
-              <button type=\"button\" class=\"btn btn-primary col-md-2\">retweet</button>
+                  #{twitterButton}
                 <div class=\"col-md-3\">
                 </div><!-- end md-3 -->
             </div> <!-- end row -->

@@ -17,11 +17,11 @@ var
 
 //initialization
 (function(){
-  stats = @getStatistics(identifier);
-
   topics = @readdir(topicRoot) .. @filter(d->@isDirectory(topicRoot+'/'+d)) .. @toArray;
   
   identifier = topics .. @join .. @hash.sha256.hash .. @codec.base64.fromBits;
+
+  stats = @getStatistics(identifier);
 
   topicDisplayImages = @readdir(topicRoot)
     .. @filter(d->@isDirectory(topicRoot+'/'+d))
