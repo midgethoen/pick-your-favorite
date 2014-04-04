@@ -31,7 +31,7 @@ var candidates;
 __js var pickRand = a->a[Math.ceil(Math.random()*(a.length-1))];
 
 function isBetter(a, b){
-  var wrpImg = t->@Img({src:pickRand(t.images)}) .. @Style('{width:200px}');
+  var wrpImg = t->@Img({src:t.image}) .. @Style('{width:200px}');
   @mainContent .. @appendContent(
     `
   <div class="content">
@@ -58,8 +58,8 @@ function isBetter(a, b){
   </div><!-- End Cotent -->
     `
     .. @Style("
-    .a-img { background-image: url('#{a.images .. pickRand}');}
-    .b-img { background-image: url('#{b.images .. pickRand}');}
+    .a-img { background-image: url('#{a.image}');}
+    .b-img { background-image: url('#{b.image}');}
     ")
   ){
     |table|
