@@ -1,0 +1,126 @@
+@ = require([
+  'mho:std',
+  'sjs:object',
+  './sortdb',
+]);
+
+exports.content = function(param){
+  var  results, stats, resultListItems, statListItems, topicSnippet;
+
+  results = @getInquiry(param.r);
+  stats = @getStatistics(results.inquiryId)
+  resultListItems = results.order .. @map(i->"<ol>#{i}</ol>") .. @join('');
+  console.log(stats);
+
+  statListItems = stats.topics 
+    .. @propertyPairs 
+    .. @sort((a,b)->(a[1]<b[1])) 
+    //.. @map(a->a[0])
+    .. @map(i->"<ol>#{i[0]} (#{i[1]}pts)</ol>")
+    .. @join(''); 
+
+  topicSnippet = "<h1>Bla</h1><p>Bla blablablablaabla bla bla bla</p>";
+
+  console.log(stats);
+
+  return "
+  <!DOCTYPE html>
+<html lang=\"en\">
+  <head>
+    <meta charset=\"utf-8\">
+    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+    <title>CombiNation</title>
+
+    <!-- Bootstrap -->
+    <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">
+  
+    <!-- CSS -->
+    <link href=\"css/combi_vanilla.css\" rel=\"stylesheet\">
+  
+   <!-- Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>
+      <script src=\"https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js\"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class=\"results\">
+    <div class=\"container\">
+      <div class=\"row\">
+        <div class=\"col-md-3\">
+        </div><!-- end md-4 -->
+        
+        <div class=\"col-md-6\">
+          <div class=\"question-text\">
+            <h1>Results</h1>
+          </div><!-- end image -->
+        </div><!-- end md-5 -->
+        
+        <div class=\"col-md-3\">
+        </div><!-- end md-4 -->
+
+      </div> <!-- end row -->
+    </div><!-- End Container -->
+  </div><!-- question -->
+  
+  <div class=\"content\">
+    <div class=\"container\">
+      <div class=\"row\">
+        <div class=\"col-md-12 results-main\">
+          <div class=\"social-img\">
+            #{topicSnippet}
+          </div><!-- end social-img -->
+        
+        <div class=\"row\">
+            <div class=\"col-md-3\">
+            </div><!-- end md-3 -->
+          <button type=\"button\" class=\"btn btn-primary col-md-2\">Like on Facebook</button>
+            <div class=\"col-md-2\">
+            </div><!-- end md-3 -->
+          <button type=\"button\" class=\"btn btn-primary col-md-2\">retweet</button>
+            <div class=\"col-md-3\">
+            </div><!-- end md-3 -->
+        </div> <!-- end row -->
+        
+        <!--<div class=\"row\">
+          <p>share results<p><code>http://www.conductance.io/examples/thesis/0112135123</code>
+        </div>--> <!-- end row -->
+
+        </div><!-- end md-12 results-main -->
+      </div> <!-- end row -->
+        
+        <div class=\"col-md-6\">
+            <div class=\"results-your\">
+          <h2>Your Results</h2>
+          <ol>
+            #{resultListItems}
+          </ol>
+            </div><!-- end social-img -->
+        </div><!-- end md-6 -->
+        
+        <div class=\"col-md-6\">
+            <div class=\"results-all\">
+          <h2>All Results <small>#{stats.participants} users</small></h2>
+          <ol>
+            #{statListItems}
+          </ol>
+            </div><!-- end social-img -->
+        </div><!-- end md-6 -->
+
+      
+    </div><!-- End Container -->
+  </div><!-- End Cotent -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src=\"https://code.jquery.com/jquery.js\"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src=\"js/bootstrap.min.js\"></script>
+  </body>
+</html>
+  ";
+}

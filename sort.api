@@ -1,20 +1,74 @@
-@ = require(['mho:app', 'sjs:nodejs/fs', 'sjs:sequence', 'sjs:object']);
+@ = require([
+  'mho:app',
+  'sjs:nodejs/fs', 
+  'sjs:sequence', 
+  'sjs:object', 
+  'sjs:sjcl',
+  './sortdb',
+]);
 
-
+//initialize
 var 
-  topicRoot = './topics';
-
-exports.getTopics = function(){
-  return @readdir(topicRoot)
+  topicRoot = './topics',
+  topics = @readdir(topicRoot) .. @filter(d->@isDirectory(topicRoot+'/'+d)) .. @toArray;
+  topicFiles = @readdir(topicRoot)
     .. @filter(d->@isDirectory(topicRoot+'/'+d))
     .. @map( topic -> {topic:topic, images:@readdir(topicRoot+"/"+topic)
         .. @filter(f->@isFile(topicRoot+"/"+topic+'/'+f)) 
         .. @map( f->('/topics/'+topic+'/'+f) )
         .. @toArray}
-    )
-   .. @toArray
-    ;
+    ) .. @toArray,
+  identifier = topics .. @join .. @hash.sha256.hash .. @codec.base64.fromBits;
+
+//console.log('topcics: ', topics);
+//console.log('topicFiles: ', topicFiles);
+//console.log('identifier: ', identifier);
+//console.log('statistics: ', statistics);
+
+//initialization
+var stats = @getStatistics(identifier);
+ 
+exports.getTopics = function(){
+  return topicFiles;
 }
 
-console.log(exports.getTopics());
+/**
+ a client's result should look like the following topic format: 
+
+ {
+  order:[
+    "topic1", "topic2", "topic3", etc..
+  ],
+ }
+ any additional information will also be stored
+ */
+exports.postResults = function(results){
+  var 
+    points = results.order.length,
+    resultId;
+
+  //check if statistics exist
+  if (!stats){
+    stats = {};
+    stats.topics = topics .. @map(k->[k,0]) .. @pairsToObject;
+    stats.participants = 0;
+  }
+ 
+  //update statistics
+  results.order .. @each{
+    |topic|
+    stats.topics[topic] += --points;
+  }
+  stats.participants = stats.participants + 1;
+
+  waitfor {
+    //update statistics record
+    @putStatistics(identifier, stats);
+  } and {
+    //store inquiry record, add the id of the inquiry
+    results.inquiryId = identifier;
+    resultId = @putInquiry(results);
+  }
+  return resultId;
+}
 

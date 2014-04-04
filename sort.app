@@ -1,6 +1,10 @@
-@ = require(['mho:app','mho:std']);
+@ = require([
+  'mho:app',
+  'mho:std',
+  './seq.sort',
+]);
 
-@mainContent .. @appendContent([`
+document.body .. @prependContent([`
     <div class="question">
     <div class="container">
       <div class="row">
@@ -20,18 +24,11 @@
     </div><!-- End Container -->
   </div><!-- question -->
 `,
-@RequireExternalStyle('/style.css')]);
+@RequireExternalStyle('/css/combi_vanilla.css')]);
 
 var candidates;
 
-@withAPI('./sort.api'){
- |api|
-  candidates = api.getTopics();
-}
-console.log(candidates);
-
-
-var pickRand = a->a[Math.ceil(Math.random()*(a.length-1))];
+__js var pickRand = a->a[Math.ceil(Math.random()*(a.length-1))];
 
 function isBetter(a, b){
   var wrpImg = t->@Img({src:pickRand(t.images)}) .. @Style('{width:200px}');
@@ -76,24 +73,20 @@ function isBetter(a, b){
   }
 }
 
-var order = [candidates.shift()];
 
-while (candidates.length){
-  var candidate = candidates.shift();
-  var min=0, max=order.length;
-  while (min !== max){
-    var mid = min + Math.round((max-min)/2);
-    if (isBetter(candidate, order[mid-1])){
-      min = mid;
-    } else {
-      max = mid-1;
-    }
-  }
-  order.splice(max-1, 0, candidate);
+@withAPI('./sort.api'){
+ |api|
+  candidates = api.getTopics();
+  var order = candidates .. @blockingSort(isBetter) .. @reverse;
+  console.log(order);
+  var resultId = api.postResults({order: order .. @map(o->o.topic)});
+  console.log('wil set location');
+  location = '/result.html?r='+resultId;
+//  @mainContent .. @appendContent([
+//    `<h1>Tadaaa</h1>`,
+//    @Table(
+//    order .. @map( i->@Tr(@Td(i.topic)) ) .. @toArray)
+//  ]);
+
 }
 
-@mainContent .. @appendContent([
-  `<h1>Tadaaa</h1>`,
-  @Table(
-  order .. @map( i->@Tr(@Td(i.topic)) ) .. @toArray)
-]);

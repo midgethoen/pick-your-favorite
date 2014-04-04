@@ -1,0 +1,125 @@
+/* vanilla tweet conf theme */
+
+body{
+	background-color: #f9f9f9;
+	background-image: url(../img/bg01.png);
+}
+
+.question{
+	background-color: #fff;
+	box-shadow: 0px 1px 1px #888;
+	text-align: center;
+}
+
+.content{
+
+}
+
+.or{
+	text-align: center;
+	margin: 300px 0 0;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	color: #767676;
+	text-transform:uppercase;
+	font-weight: 300;
+	letter-spacing: 2px;
+}
+
+.image{
+	margin: 60px 0 0px;
+	height: 540px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	//box-shadow: 0px 2px 2px #888;
+}
+
+.image:hover{
+	box-shadow: 0 0 13px rgba(95, 196, 249, 1);
+}
+
+
+.shadow{
+	height: 30px;
+	z-index: -10;
+	margin: -4px 0 40px;
+	background-color: #888;
+	border-bottom-left-radius: 200px 30px;
+	border-bottom-right-radius: 200px 30px;
+	box-shadow: 0px 5px 10px #888;
+	
+}
+
+h1{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 24px;
+	color: #767676;
+	font-weight: 300;
+	letter-spacing: 2px;
+}
+
+h2{
+	margin: 20px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 24px;
+	color: #767676;
+	font-weight: 300;
+}
+
+.i01{
+	background-repeat:no-repeat;
+	background-position: center center;
+	background-image: url(../img/i01.jpg);
+}
+
+.i02{
+	background-repeat:no-repeat;
+	background-position: center center;
+	background-image: url(../img/i02.jpg);
+}
+
+/*--------- results ------- */
+
+.results{
+	text-align: center;
+}
+
+.results-main{
+	height: 540px;
+	margin: 60px 0 0px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	//box-shadow: 0px 2px 2px #888;	
+}
+
+.social-img{
+	margin: 20px 10px;
+	border: 1px solid #ddd;
+	overflow: hidden;
+}
+
+.social-img img{
+	display: block;
+	margin-left: auto;
+	margin-right: auto
+}
+
+.results-your{
+	margin: 60px 0px 0px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	//box-shadow: 0px 2px 2px #888;
+	
+}
+
+.results-all{
+	margin: 60px 0px 0px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	//box-shadow: 0px 2px 2px #888;
+	
+}
