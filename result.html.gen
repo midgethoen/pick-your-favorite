@@ -14,7 +14,6 @@ exports.content = function(param){
     var stats, resultListItems, statListItems, topicSnippet, facebookButton, twitterButton;
     stats = @inquiry.getStatistics();
     resultListItems = results.order .. @map(i->"<ol>#{i}</ol>") .. @join('');
-    console.log(stats);
 
     statListItems = stats.topics 
       .. @propertyPairs 

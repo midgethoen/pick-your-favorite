@@ -77,10 +77,8 @@ function isBetter(a, b){
 @withAPI('./sort.api'){
  |api|
   candidates = api.getTopics();
-  var order = candidates .. @blockingSort(isBetter);
-  console.log(order);
+  var order = candidates .. @blockingSort(isBetter) .. @reverse;
   var resultId = api.postResults({order: order .. @map(o->o.topic)});
-  console.log('wil set location');
   location = '/result.html?r='+resultId;
 }
 
