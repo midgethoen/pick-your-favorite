@@ -77,16 +77,10 @@ function isBetter(a, b){
 @withAPI('./sort.api'){
  |api|
   candidates = api.getTopics();
-  var order = candidates .. @blockingSort(isBetter) .. @reverse;
+  var order = candidates .. @blockingSort(isBetter);
   console.log(order);
   var resultId = api.postResults({order: order .. @map(o->o.topic)});
   console.log('wil set location');
   location = '/result.html?r='+resultId;
-//  @mainContent .. @appendContent([
-//    `<h1>Tadaaa</h1>`,
-//    @Table(
-//    order .. @map( i->@Tr(@Td(i.topic)) ) .. @toArray)
-//  ]);
-
 }
 
