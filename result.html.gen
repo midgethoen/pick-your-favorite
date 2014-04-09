@@ -13,13 +13,14 @@ exports.content = function(param){
   if (results){
     var stats, resultListItems, statListItems, topicSnippet, facebookButton, twitterButton;
     stats = @inquiry.getStatistics();
-    resultListItems = results.order .. @map(i->"<ol>#{i}</ol>") .. @join('');
+    resultListItems = results.order .. @map(i->"<li>#{i}</li>") .. @join('');
+
 
     statListItems = stats.topics 
       .. @propertyPairs 
-      .. @sort((a,b)->(a[1]<b[1])) 
+      .. @sort((a,b)->(b[1]-a[1])) 
       //.. @map(a->a[0])
-      .. @map(i->"<ol>#{i[0]} (#{i[1]}pts)</ol>")
+      .. @map(i->"<li>#{i[0]} (#{i[1]}pts)</li>")
       .. @join(''); 
 
      
@@ -30,14 +31,14 @@ exports.content = function(param){
     facebookButton = 
       "<a href=\"https://www.facebook.com/sharer/sharer.php?u=#{this.url.source .. @url.encode}\" 
           target=\"_blank\"
-          class=\"btn btn-primary col-md-2\">
+          class=\"btn btn-primary col-md-3 col-md-offset-2 col-xs-4 col-xs-offset-1\">
            Share
        </a>";
 
     twitterButton = 
       "<a href=\"https://twitter.com/share?url=#{this.url.source .. @url.encode}\" 
           target=\"_blank\"
-          class=\"btn btn-primary col-md-2\">
+          class=\"btn btn-primary col-md-3 col-md-offset-2 col-xs-4 col-xs-offset-2\">
            Tweet 
        </a>";
 
@@ -95,14 +96,8 @@ exports.content = function(param){
               </div><!-- end social-img -->
             
             <div class=\"row\">
-                <div class=\"col-md-3\">
-                </div><!-- end md-3 -->
                   #{facebookButton}
-                <div class=\"col-md-2\">
-                </div><!-- end md-3 -->
                   #{twitterButton}
-                <div class=\"col-md-3\">
-                </div><!-- end md-3 -->
             </div> <!-- end row -->
             
             <!--<div class=\"row\">

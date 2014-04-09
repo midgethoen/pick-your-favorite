@@ -5,24 +5,30 @@
 ]);
 
 document.body .. @prependContent([`
+    <div class="visible-landscape-xs overlay">
+      <div class="col-xs-12">
+        <img src="/img/turnmobile.png" class="center-block"/>
+        <p>Rotate telephone</p>
+      </div>
+    </div>
     <div class="question">
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
-        </div><!-- end md-4 -->
+        <div class="col-xs-3">
+        </div
         
-        <div class="col-md-6">
+        <div class="col-xs-6">
           <div class="question-text">
-            <h1>Which fruit would you choose for lunch, based on what you see below?</h1>
-          </div><!-- end image -->
-        </div><!-- end md-5 -->
+            <h1>Which font appears most trustworthy to you</h1>
+          </div>
+        </div>
         
-        <div class="col-md-3">
-        </div><!-- end md-4 -->
+        <div class="col-xs-3">
+        </div>
 
-      </div> <!-- end row -->
-    </div><!-- End Container -->
-  </div><!-- question -->
+      </div> 
+    </div>
+  </div>
 `,
 @RequireExternalStyle('/css/combi_vanilla.css')]);
 
@@ -36,31 +42,30 @@ function isBetter(a, b){
     `
   <div class="content">
     <div class="container">
-      <div class="row">
-        <div class="a col-md-5">
-          <div class="image b-img">
-          </div><!-- end image -->
-        </div><!-- end md-5 -->
+      <div class="row hidden-portrait-xs results-row">
+        <div class="a col-sm-5 col-xs-6">
+          <div>
+            <img class="image" src="${a.image}"/>
+          </div>
+        </div>
         
-        <div class=" col-md-2">
-          <div class="or">
-            <p>or<p>
-          </div><!-- end image -->
-        </div><!-- end md-5 -->
+        <div class="col-xs-2 hidden-xs"></div>
         
-        <div class="b col-md-5">
-          <div class="image a-img">
-          </div><!-- end image -->
-        </div><!-- end md-5 -->
-
-      </div> <!-- end row -->
-    </div><!-- End Container -->
-  </div><!-- End Cotent -->
+        <div class="b col-sm-5 col-xs-6">
+          <div>
+            <img class="image" src="${b.image}"/>
+          </div>
+        </div>
+            
+        <p class="or hidden-xs">or<p>
+      </div>
+    </div>
+  </div>
     `
-    .. @Style("
-    .a-img { background-image: url('#{a.image}');}
-    .b-img { background-image: url('#{b.image}');}
-    ")
+   // .. @Style("
+   // .a-img { background-image: url('#{a.image}');}
+   // .b-img { background-image: url('#{b.image}');}
+   // ")
   ){
     |table|
     waitfor{
@@ -77,7 +82,7 @@ function isBetter(a, b){
 @withAPI('./sort.api'){
  |api|
   candidates = api.getTopics();
-  var order = candidates .. @blockingSort(isBetter) .. @reverse;
+  var order = candidates .. @blockingSort(isBetter);
   var resultId = api.postResults({order: order .. @map(o->o.topic)});
   location = '/result.html?r='+resultId;
 }
