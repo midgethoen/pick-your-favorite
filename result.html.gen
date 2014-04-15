@@ -13,14 +13,16 @@ exports.content = function(param){
   if (results){
     var stats, resultListItems, statListItems, topicSnippet, facebookButton, twitterButton;
     stats = @inquiry.getStatistics();
-    resultListItems = results.order .. @map(i->"<li>#{i}</li>") .. @join('');
+    //resultListItems = results.order .. @map(i->"<li>#{i}</li>") .. @join('');
+	resultListItems = results.order .. @map(i->"<li><a href='/topics/#{i}/end.png' target='_blank'>#{i}</a></li>") .. @join('');
 
 
     statListItems = stats.topics 
       .. @propertyPairs 
       .. @sort((a,b)->(b[1]-a[1])) 
       //.. @map(a->a[0])
-      .. @map(i->"<li>#{i[0]} (#{i[1]}pts)</li>")
+      // .. @map(i->"<li>#{i[0]} (#{i[1]}pts)</li>")
+	  .. @map(i->"<li><a href='/topics/#{i[0]}/end.png' target='_blank'>#{i[0]}</a> (#{i[1]}pts)</li>")
       .. @join(''); 
 
      
@@ -31,15 +33,15 @@ exports.content = function(param){
     facebookButton = 
       "<a href=\"https://www.facebook.com/sharer/sharer.php?u=#{this.url.source .. @url.encode}\" 
           target=\"_blank\"
-          class=\"btn btn-primary col-md-3 col-md-offset-2 col-xs-4 col-xs-offset-1\">
-           Share
+          class=\"btn btn-primary col-md-3 col-md-offset-2 col-xs-4 col-xs-offset-1 btn-facebook\">
+           <img src=\"img/facebook.png\" />Like on Facebook
        </a>";
 
     twitterButton = 
       "<a href=\"https://twitter.com/share?url=#{this.url.source .. @url.encode}\" 
           target=\"_blank\"
-          class=\"btn btn-primary col-md-3 col-md-offset-2 col-xs-4 col-xs-offset-2\">
-           Tweet 
+          class=\"btn btn-primary col-md-3 col-md-offset-2 col-xs-4 col-xs-offset-2 btn-twitter\">
+           <img src=\"img/twitter.png\">Tweet 
        </a>";
 
     return "
@@ -127,6 +129,24 @@ exports.content = function(param){
 
           
         </div><!-- End Container -->
+      </div><!-- End Cotent -->
+	  
+      <div class=\"footer\">
+      	<div class=\"container\">
+      		<div class=\"row\">
+      		  <div class=\"col-md-6\">
+      			  <h1>Pick Your Favourite</h1>
+      			  <p>Pick your favourite is a sorting application created by <a href=\"http://onilabs.com/\">Oni Labs</a> to demonstrate the uses of the <a href=\"http://conductance.io/\">Conductance</a> framework.</p>
+      			<p>It was originally created to help our graduate student gain insights into his thesis topic “How to convey Trustworthiness in web application” by sorting variables in the order of relevance.</p>
+      		  </div><!-- end md-6 -->
+		  
+		  
+      		  <div class=\"col-md-6\">
+      		  </div><!-- end md-6 -->
+      		  <a href=\"http://onilabs.com\"><img src=\"img/onilogo01.png\" class=\"footer-logo\"/></a>
+
+      		</div> <!-- end row -->
+      	</div><!-- End Container -->
       </div><!-- End Cotent -->
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
