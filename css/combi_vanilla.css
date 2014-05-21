@@ -43,18 +43,6 @@ body{
   box-shadow: 0 0 13px rgba(95, 196, 249, 1);
 }
 
-
-.shadow{
-  height: 30px;
-  z-index: -10;
-  margin: -4px 0 40px;
-  background-color: #888;
-  border-bottom-left-radius: 200px 30px;
-  border-bottom-right-radius: 200px 30px;
-  box-shadow: 0px 5px 10px #888;
-  
-}
-
 h1{
   font-family: 'Montserrat', sans-serif;
   font-size: 24px;
@@ -163,3 +151,73 @@ h2{
     display: block;
   }
 }
+
+/*--------- Shadows ------- */
+
+.intro:after, .a:after, .b:after, .results-main:after, .results-your:after, .results-all:after{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    -webkit-box-shadow:0 5px 40px rgba(0,0,0,0.9);
+    box-shadow:0 5px 40px rgba(0,0,0,0.9);
+    bottom:0px;
+    left:10%;
+    right:10%;
+    width:80%;
+    height:10%;
+    -moz-border-radius:100%;
+    border-radius:100%;
+}
+
+
+/*--------- Footer ------- */
+
+.footer{
+	color: #686868;
+	margin: 100px 0 0;
+	background-color: #1e1e1e;
+}
+
+.footer-logo{
+	margin: 100px 0 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*--------- btn styles ------- */
+
+.btn-twitter, .btn-facebook{
+	border-radius: 6px;
+	height: 36px;
+	
+}
+
+.btn-facebook{
+	background-color: #3b5998;
+	border: 1px solid #224080;
+}
+
+.btn-facebook:hover{
+	background-color: #5970a0;
+	border: 1px solid #3782bb;
+}
+
+.btn-facebook img{
+	margin: -3px 20px 0 -20px;
+}
+
+.btn-twitter{
+	background-color: #55acee;
+	border: 1px solid #3782bb;
+}
+
+.btn-twitter:hover{
+	background-color: #80c1f2;
+	border: 1px solid #69a1cc;
+}
+
+.btn-twitter img{
+	margin: -3px 20px 0 -20px;
+}
+

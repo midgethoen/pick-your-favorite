@@ -32,6 +32,27 @@ document.body .. @prependContent([`
 `,
 @RequireExternalStyle('/css/combi_vanilla.css')]);
 
+document.body .. @appendContent([`
+    <div class="footer">
+    	<div class="container">
+    		<div class="row">
+    		  <div class="col-md-6">
+    			  <h1>Pick Your Favourite</h1>
+    			  <p>Pick your favourite is a sorting application created by <a href="http://onilabs.com/">Oni Labs</a> to demonstrate the uses of the <a href="http://conductance.io/">Conductance</a> framework.</p>
+    			<p>It was originally created to help our graduate student gain insights into his thesis topic “How to convey Trustworthiness in web application” by sorting variables in the order of relevance.</p>
+    		  </div><!-- end md-6 -->
+		  
+		  
+    		  <div class="col-md-6">
+    		  </div><!-- end md-6 -->
+    		  <a href="http://onilabs.com"><img src="img/onilogo01.png" class="footer-logo"/></a>
+
+    		</div> <!-- end row -->
+    	</div><!-- End Container -->
+    </div><!-- End Cotent -->
+`,
+@RequireExternalStyle('/css/combi_vanilla.css')]);
+
 var candidates;
 
 __js var pickRand = a->a[Math.ceil(Math.random()*(a.length-1))];
@@ -43,21 +64,21 @@ function isBetter(a, b){
   <div class="content">
     <div class="container">
       <div class="row hidden-portrait-xs results-row">
-        <div class="a col-sm-5 col-xs-6">
+        <div class="a col-sm-6 col-xs-6">
           <div>
             <img class="image" src="${a.image}"/>
           </div>
         </div>
         
-        <div class="col-xs-2 hidden-xs"></div>
         
-        <div class="b col-sm-5 col-xs-6">
+        
+        <div class="b col-sm-6 col-xs-6">
           <div>
-            <img class="image" src="${b.image}"/>
+            <img class="image shadow" src="${b.image}"/>
           </div>
         </div>
             
-        <p class="or hidden-xs">or<p>
+        
       </div>
     </div>
   </div>
