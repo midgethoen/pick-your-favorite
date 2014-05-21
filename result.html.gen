@@ -7,26 +7,22 @@
 @inquiry = require('./inquiry');
 
 exports.content = function(param){
-  var  results;
+  var results, stats, resultListItems, statListItems, topicSnippet, facebookButton, twitterButton;
 
   results = @db.getInquiry(param.r);
   if (results){
-    var stats, resultListItems, statListItems, topicSnippet, facebookButton, twitterButton;
-    stats = @inquiry.getStatistics();
     resultListItems = results.order .. @map(i->"<li>#{i}</li>") .. @join('');
-
-
-    statListItems = stats.topics 
-      .. @propertyPairs 
-      .. @sort((a,b)->(b[1]-a[1])) 
-      //.. @map(a->a[0])
-      .. @map(i->"<li>#{i[0]} (#{i[1]}pts)</li>")
-      .. @join(''); 
-
-     
     topicSnippet = "<img src=\"#{
       (@inquiry.getTopicEndImages() .. @find(t->t.topic==results.order[0])).image
     }\"/>";
+  }
+
+  stats = @inquiry.getStatistics();
+    statListItems = stats.topics 
+      .. @propertyPairs 
+      .. @sort((a,b)->(b[1]-a[1])) 
+      .. @map(i->"<li>#{i[0]} (#{i[1]}pts)</li>")
+      .. @join(''); 
 
     facebookButton = 
       "<a href=\"https://www.facebook.com/sharer/sharer.php?u=#{this.url.source .. @url.encode}\" 
@@ -90,6 +86,7 @@ exports.content = function(param){
       <div class=\"content\">
         <div class=\"container\">
           <div class=\"row\">
+            "+((topicSnippet=== undefined)?"":" 
             <div class=\"col-md-12 results-main\">
               <div class=\"social-img\">
                 #{topicSnippet}
@@ -100,13 +97,12 @@ exports.content = function(param){
                   #{twitterButton}
             </div> <!-- end row -->
             
-            <!--<div class=\"row\">
-              <p>share results<p><code>http://www.conductance.io/examples/thesis/0112135123</code>
             </div>--> <!-- end row -->
+            ")+"
 
             </div><!-- end md-12 results-main -->
           </div> <!-- end row -->
-            
+           "+((resultListItems === undefined)?"":" 
             <div class=\"col-md-6\">
                 <div class=\"results-your\">
               <h2>Your Results</h2>
@@ -115,7 +111,7 @@ exports.content = function(param){
               </ol>
                 </div><!-- end social-img -->
             </div><!-- end md-6 -->
-            
+            ")+"
             <div class=\"col-md-6\">
                 <div class=\"results-all\">
               <h2>All Results <small>#{stats.participants} users</small></h2>
@@ -136,7 +132,4 @@ exports.content = function(param){
       </body>
     </html>
   "
-  } else {
-    return "Not found";
-  };
-}
+};

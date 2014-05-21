@@ -1,7 +1,7 @@
 @ = require([
   'mho:app',
   'mho:std',
-  './seq.sort',
+  './seq_sort.sjs',
 ]);
 
 document.body .. @prependContent([`
